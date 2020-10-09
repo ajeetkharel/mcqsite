@@ -1,10 +1,19 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .models import Exam
+from .models import Exam, Question
+from datetime import datetime
+import pytz
 
 @login_required(login_url='/')
 def online_exam(request):
-    questions = Exam.objects.all()
+    exams = Exam.objects.all()
+    today_date = datetime.now().replace(tzinfo=pytz.UTC)
+    for exam in exams:
+        if exam.date <= today_date:
+            current_exam = exam
+            break
+    questions = Question.objects.filter(exam=current_exam)
+    print(questions)
     messages = []
     if request.method == "POST":
         for i in range(questions.count()):

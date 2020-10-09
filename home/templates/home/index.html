@@ -1,67 +1,71 @@
 {% extends 'home/base.html' %}
 {% block content %}
 {% load index %}
-<div class="container">
-    <form action="" method="post">
-        {% csrf_token %}
-        {% for question in Exam %}
-        <div class="card bg-primary mb-3 ">
-                <div class="text-white card-body" style="padding: 10px 15px;">
-                    <div class="card-title" style="font-size:large;">                  
-                        <pre style="color: white;margin: 0px;"></pre>{{question.Question}}</pre>
-                    </div>
-                    {% if messages %}
-                        {% with i=forloop.counter0 %}
-                        {% if messages|index:i|index:0 == "C" %}
-                            <div class="p-2 alert alert-primary" style="font-size: small;" role="alert">
-                                {{ messages|index:i }}
-                            </div>
+{% if Exam %}
+    <div class="container">
+        <form action="" method="post">
+            {% csrf_token %}
+            {% for question in Exam %}
+            <div class="card bg-primary mb-3 ">
+                    <div class="text-white card-body" style="padding: 10px 15px;">
+                        <div class="card-title" style="font-size:large;">                  
+                            <pre style="color: white;margin: 0px;"></pre>{{question.title}}</pre>
+                        </div>
+                        {% if messages %}
+                            {% with i=forloop.counter0 %}
+                            {% if messages|index:i|index:0 == "C" %}
+                                <div class="p-2 alert alert-primary" style="font-size: small;" role="alert">
+                                    {{ messages|index:i }}
+                                </div>
+                            {% else %}
+                                <div class="p-2 alert alert-warning" style="font-size: small;" role="alert">
+                                    {{ messages|index:i}}
+                                </div>
+                            {% endif %}
+                            {% endwith %}
                         {% else %}
-                            <div class="p-2 alert alert-warning" style="font-size: small;" role="alert">
-                                {{ messages|index:i}}
+                        {% endif %}        
+                    </div>
+                    <ul class = "list-group">
+                        <li class = "list-group-item">
+                            <div class="radio">
+                                <input type="radio"  value="1" id="question{{question.pk}}o1" name="question{{question.pk}}" group="question{{question.pk}}" />
+                                <label for="question{{question.pk}}o1">
+                                    {{question.Option1}}
+                                </label>
                             </div>
-                        {% endif %}
-                        {% endwith %}
-                    {% else %}
-                    {% endif %}        
+                        </li>
+                        <li class = "list-group-item">
+                            <div class="radio">
+                                <input type="radio" value="2" id="question{{question.pk}}o2" name="question{{question.pk}}" group="question{{question.pk}}" />
+                                <label for="question{{question.pk}}o2">
+                                    {{question.Option2}}
+                                </label>
+                            </div>
+                        </li>
+                        <li class = "list-group-item">
+                            <div class="radio">
+                                <input type="radio" value="3" id="question{{question.pk}}o3" name="question{{question.pk}}" group="question{{question.pk}}" />
+                                <label for="question{{question.pk}}o3">
+                                    {{question.Option3}}
+                                </label>
+                            </div>
+                        </li>
+                        <li class = "list-group-item">
+                            <div class="radio">
+                                <input type="radio" value="4" id="question{{question.pk}}o4" name="question{{question.pk}}" group="question{{question.pk}}" />
+                                <label for="question{{question.pk}}o4">
+                                    {{question.Option4}}
+                                </label>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <ul class = "list-group">
-                    <li class = "list-group-item">
-                        <div class="radio">
-                            <input type="radio"  value="1" id="question{{question.pk}}o1" name="question{{question.pk}}" group="question{{question.pk}}" />
-                            <label for="question{{question.pk}}o1">
-                                {{question.Option1}}
-                            </label>
-                        </div>
-                    </li>
-                    <li class = "list-group-item">
-                        <div class="radio">
-                            <input type="radio" value="2" id="question{{question.pk}}o2" name="question{{question.pk}}" group="question{{question.pk}}" />
-                            <label for="question{{question.pk}}o2">
-                                {{question.Option2}}
-                            </label>
-                        </div>
-                    </li>
-                    <li class = "list-group-item">
-                        <div class="radio">
-                            <input type="radio" value="3" id="question{{question.pk}}o3" name="question{{question.pk}}" group="question{{question.pk}}" />
-                            <label for="question{{question.pk}}o3">
-                                {{question.Option3}}
-                            </label>
-                        </div>
-                    </li>
-                    <li class = "list-group-item">
-                        <div class="radio">
-                            <input type="radio" value="4" id="question{{question.pk}}o4" name="question{{question.pk}}" group="question{{question.pk}}" />
-                            <label for="question{{question.pk}}o4">
-                                {{question.Option4}}
-                            </label>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        {% endfor %}
-        <button class="btn btn-primary" type="submit" value="submit">Submit</button>
-    </form>
-</div>
+            {% endfor %}
+            <button class="btn btn-primary" type="submit" value="submit">Submit</button>
+        </form>
+    </div>
+{% else %}
+    Exam hasn't yet started
+{% endif %}
 {% endblock %}
