@@ -1,0 +1,75 @@
+{% extends 'home/base.html' %}
+{% block content %}
+    <div class="d-flex bd-highlight justify-content-center">
+        <form class="text-center border border-dark p-5 mb-3" action="" method="POST">
+            {% csrf_token %}
+            <p class="h4 mb-4">Register</p>
+            <div class="d-flex justify-content-between">
+                <input type="text" class="form-control mr-3 mb-4" name="first_name" size="13" placeholder="First Name">
+                <input type="text" class="form-control mb-4" name="last_name" size="13" placeholder="Last Name">
+            </div>
+
+            <!-- Email -->
+
+            {% if form.errors %}
+                {% for field in form %}
+                    {% if field.label == "Email address" %}
+                        <div class="alert alert-danger">
+                            <strong>{{ field.errors.0|escape }}</strong>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" name="email" size="30" placeholder="E-mail">
+    
+            <!-- Password -->
+            {% if form.errors %}
+                {% for field in form %}
+                    {% if field.label == "Password" %}
+                    {{field.errors}}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ field.errors.0|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" name="password1" placeholder="Password">
+            {% if form.errors %}
+                {% for field in form %}
+                    {% if field.label == "Password confirmation" %}
+                        <div class="alert alert-danger">
+                            <strong>{{ field.errors.0|escape }}</strong>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" name="password2" placeholder="Confirm Password">
+    
+            <div class="d-flex justify-content-between">
+                <div>
+                    <!-- Remember me -->
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember">
+                        <label class="custom-control-label" for="defaultLoginFormRemember">I accept all the terms and conditions</label>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Sign in button -->
+            <button class="btn btn-info btn-block my-4" type="submit">Sign up</button>
+    
+            <!-- Register -->
+            <p>Already registered?
+                <a href="{% url 'user-login' %}">Login</a>
+            </p>
+    
+            <!-- Social login -->
+            <p>or sign up with:</p>
+    
+            <a href="#" class="mx-2" role="button"><i class="fab fa-google light-blue-text"></i></a>    
+            <a href="#" class="mx-2" role="button"><i class="fab fa-facebook-f light-blue-text"></i></a>
+        </form>
+    </div>
+{% endblock content %}
