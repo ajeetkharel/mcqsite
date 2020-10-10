@@ -1,11 +1,15 @@
+{%  load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Online Exam</title>
     {% block head%} {% endblock head %}
+    
 </head>
 <body>
     <nav class="mb-2 navbar navbar-expand-md navbar-dark bg-primary">
@@ -35,7 +39,12 @@
               {% if user.is_authenticated %}
                 <div class="dropdown-menu" aria-labelledby="dropdown04">
                   <a class="dropdown-item" href="#">Profile</a>
-                  <a class="dropdown-item" href="{% url 'user-result' user.pk %}">Results</a>
+                  {% if not user.is_student %}
+                  <a class="dropdown-item" href="{% url 'exam-manage'%}">Manage Exams</a>
+                  <a class="dropdown-item" href="{% url 'exam-home'%}">Student's results</a>
+                  {%else%}
+                    <a class="dropdown-item" href="{% url 'user-result' user.pk %}">Results</a>
+                  {% endif %}
                   <a class="dropdown-item" href="{% url 'user-logout' %}">Logout</a>
                 </div>
               {% else %}
@@ -59,11 +68,13 @@
       {%else%}
         <div class="mb-2"></div>
       {% endif %} -->
+    
     {% block content %} {% endblock content %}
     {% if user.is_authenticated %}
       {% if user.is_student %}
         {% block student %} {% endblock student %}
       {% else %}
+
         {% block teacher %} {% endblock teacher %}
       {% endif %}
     {% endif %}
@@ -81,6 +92,13 @@
             }
         });
     });
+</script>
+<!-- Menu Toggle Script -->
+<script>
+  $("#menu-toggle").click(function(e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+  });
 </script>
 </body>
 </html>

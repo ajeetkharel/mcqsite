@@ -23,6 +23,7 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', views.online_exam, name='exam-home'),
+    path('manage_exams/', views.manage_exams, name='exam-manage'),
     path('', userviews.login_user, name='user-login'),
     path('register/', userviews.register_user, name='user-register'),
     path('logout/', userviews.logout_user, name='user-logout'),

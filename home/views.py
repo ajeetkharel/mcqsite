@@ -39,7 +39,8 @@ def online_exam(request):
     else:
         students = User.objects.filter(is_student=True)
         page = request.GET.get('page', 1)
-        paginator = Paginator(students, 10)
+        paginator = Paginator(students, 2)
+        
         try:
             fstudents = paginator.page(page)
         except PageNotAnInteger:
@@ -48,3 +49,7 @@ def online_exam(request):
             fstudents = paginator.page(paginator.num_pages)
 
         return render(request, 'home/index.html', {'Students':fstudents, 'Exam':current_exam, 'Questions':questions, 'messages':messages})
+
+def manage_exams(request):
+    exams = Exam.objects.all()
+    return render(request, 'user/manage_exam.html', {'exams':exams})

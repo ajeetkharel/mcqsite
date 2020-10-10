@@ -73,7 +73,12 @@
 </div>
 {% endblock student%}
 {% block teacher %}
+
 <div class="container">
+
+<div class="alert alert-secondary">
+    <strong>Student's Results</strong>
+</div>
     <table class="table table-hover table-bordered">
         <thead class="thead-dark">
             <tr>
@@ -98,8 +103,11 @@
     </table>
     <nav aria-label="Page navigation">
         {% if Students.has_other_pages %}
-            <ul class="pagination pagination-sm justify-content-start">
-        {% if Students.has_previous %}
+            <ul class="pagination pagination-sm justify-content-end">
+            <div class="mr-auto">
+                Showing {{Students.paginator.per_page}} out of {{Students.paginator.count}} results
+            </div>
+            {% if Students.has_previous %}
             <li class="page-item"><a class="page-link" href="?page={{ Students.previous_page_number }}">&laquo;</a></li>
         {% else %}
             <li class="page-item disabled"><a class="page-link" >&laquo;</a></li>
