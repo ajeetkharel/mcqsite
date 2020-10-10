@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <title>Document</title>
+    <title>Online Exam</title>
+    {% block head%} {% endblock head %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-primary mb-2">
-        <a class="navbar-brand" href="{% url 'exam-home' %}">Expand at md</a>
+    <nav class="mb-2 navbar navbar-expand-md navbar-dark bg-primary">
+        <a class="navbar-brand" href="{% url 'exam-home' %}">Online Exam</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -26,7 +27,7 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {% if user.is_authenticated %}
-                {{user.first_name}}
+                {{user.first_name}} ({% if user.is_student != True %}Teacher{% endif %}{% if user.is_student %}Student{% endif %})
               {% else %}
                 Account
               {% endif %}
@@ -34,7 +35,7 @@
               {% if user.is_authenticated %}
                 <div class="dropdown-menu" aria-labelledby="dropdown04">
                   <a class="dropdown-item" href="#">Profile</a>
-                  <a class="dropdown-item" href="#">Results</a>
+                  <a class="dropdown-item" href="{% url 'user-result' user.pk %}">Results</a>
                   <a class="dropdown-item" href="{% url 'user-logout' %}">Logout</a>
                 </div>
               {% else %}
@@ -48,7 +49,24 @@
           </ul>
         </div>
       </nav>
+      <!-- {% if user.is_authenticated %}
+        <center>
+          <div class="mb-2 p-0 alert alert-success alert-dismissible">
+            <button type="button" class="p-0 pr-2 close" data-dismiss="alert">&times;</button>
+            <strong>Logged in as{% if user.is_student != True %} Teacher {% endif %}  {% if user.is_student %} Student {% endif %}</strong>
+          </div>
+        </center>
+      {%else%}
+        <div class="mb-2"></div>
+      {% endif %} -->
     {% block content %} {% endblock content %}
+    {% if user.is_authenticated %}
+      {% if user.is_student %}
+        {% block student %} {% endblock student %}
+      {% else %}
+        {% block teacher %} {% endblock teacher %}
+      {% endif %}
+    {% endif %}
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>

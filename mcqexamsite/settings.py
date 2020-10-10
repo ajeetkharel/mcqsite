@@ -25,7 +25,7 @@ SECRET_KEY = '81p@#bek)u4m2)qq++4q-&18u(b)(!o(wr23wru($#my==i+%v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','stark-beach-24325.herokuapp.com']
+ALLOWED_HOSTS = ['localhost','127.0.0.1', 'stark-beach-24325.herokuapp.com']
 
 
 # Application definition
@@ -93,9 +93,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },

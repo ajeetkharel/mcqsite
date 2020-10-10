@@ -1,9 +1,11 @@
 from django.db import models
 from datetime import datetime
+from user.models import User
 
 class Exam(models.Model):
     title = models.CharField(max_length=200)
-    date = models.DateTimeField(default=datetime.now(), blank=True)
+    start_date = models.DateTimeField(default=datetime.now(), blank=True)
+    end_date = models.DateTimeField(default=datetime.now(), blank=True)
 
 
 class Question(models.Model):
@@ -15,3 +17,8 @@ class Question(models.Model):
     CorrectOption = models.CharField(max_length=100)
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
 
+class Result(models.Model):
+    idt = models.IntegerField()
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
+    right = models.IntegerField()
+    wrong = models.IntegerField()

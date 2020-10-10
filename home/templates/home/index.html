@@ -1,11 +1,14 @@
 {% extends 'home/base.html' %}
-{% block content %}
+{% block student %}
 {% load index %}
-{% if Exam %}
-    <div class="container">
+<div class="container">
+    {% if Exam %}
+        <div class="alert alert-primary">
+            <strong>Current Exam: {{ Exam.title }}</strong>
+        </div>
         <form action="" method="post">
             {% csrf_token %}
-            {% for question in Exam %}
+            {% for question in Questions %}
             <div class="card bg-primary mb-3 ">
                     <div class="text-white card-body" style="padding: 10px 15px;">
                         <div class="card-title" style="font-size:large;">                  
@@ -64,8 +67,58 @@
             {% endfor %}
             <button class="btn btn-primary" type="submit" value="submit">Submit</button>
         </form>
-    </div>
 {% else %}
     Exam hasn't yet started
 {% endif %}
-{% endblock %}
+</div>
+{% endblock student%}
+{% block teacher %}
+<div class="container">
+    <table class="table table-hover table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Exam given</th>
+                <th scope="col">Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in Students %}
+                <tr>
+                    <th scope="row">{{student.pk}}</th>
+                    <td> {{student.first_name}} {{student.last_name}} </td>
+                    <td> {{ student|gave_exam }} </td>
+                    <td>
+                        <a class="btn btn-small {% if not student|gave_exam %} btn-secondary disabled {% else %} btn-primary {% endif %}" href="{% url 'user-result' student.pk%}">View Result</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation">
+        {% if Students.has_other_pages %}
+            <ul class="pagination pagination-sm justify-content-start">
+        {% if Students.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ Students.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+            <li class="page-item disabled"><a class="page-link" >&laquo;</a></li>
+        {% endif %}
+        {% for i in Students.paginator.page_range %}
+            {% if Students.number == i %}
+            <li class="page-item active"><a class="page-link" >{{ i }} <span class="sr-only">(current)</span> 
+        .     </a></li>
+        {% else %}
+            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if Students.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ Students.next_page_number }}">&raquo;</a></li>
+            {% else %}
+            <li class="page-item disabled"><a class="page-link" >&raquo;</a></li>
+            {% endif %}
+        </ul>
+        {% endif %}
+    </nav>
+</div>
+{% endblock teacher %}

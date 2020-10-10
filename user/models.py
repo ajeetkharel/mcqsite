@@ -56,6 +56,7 @@ class User(AbstractBaseUser):
         max_length=255,
         verbose_name="Last Name",
     )
+    is_student = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
 from django.contrib.auth import authenticate, login, logout
+from home.models import Result
 
 def login_user(request):
     if request.user.is_authenticated:
@@ -39,3 +40,9 @@ def register_user(request):
 def logout_user(request):
     logout(request)
     return redirect('user-login')
+
+def user_result(request, pk):
+    result = Result.objects.filter(idt=pk)
+    if result:
+        result =  result[0]
+    return render(request, 'user/result.html', {'id':pk, 'result':result})

@@ -1,0 +1,54 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block head %}
+  <link rel="stylesheet" href="{% static 'user/error404.css' %}">
+{% endblock head %}
+{% block content %}
+{% with id|add:user.pk as template %}
+{% if result and template == id|add:id or user.is_student == False %}
+        <div class="alert alert-primary">
+          <strong>Result of: {{ result.user.first_name}} {{result.user.last_name }}</strong>
+        </div>
+        <div class="m-2 card-group">
+            <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+                <div class="card-header">Exam</div>
+                <div class="card-body">
+                  <h5 class="card-title">{{result.exam.title}}</h5>
+                </div>
+              </div>
+            <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+                <div class="card-header">Right</div>
+                <div class="card-body">
+                  <h5 class="card-title">{{result.right}}</h5>
+                </div>
+              </div>
+              <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
+                <div class="card-header">Wrong</div>
+                <div class="card-body">
+                  <h5 class="card-title">{{result.wrong}}</h5>
+                </div>
+              </div>
+        </div>
+  {% elif not result and template == id|add:id%}
+  <div id="notfound">
+    <div class="notfound">
+    <div class="notfound-404"></div>
+    <h1>404</h1>
+    <h2>Oops! No Results Found</h2>
+    <p>You haven't attended any exams yet.</p>
+    <a href="{% url 'exam-home' %}">Back to homepage</a>
+    </div>
+  </div>
+  {% else %}
+    <div id="notfound">
+      <div class="notfound">
+      <div class="notfound-404"></div>
+      <h1>404</h1>
+      <h2>Oops! Page Not Be Found</h2>
+      <p>Sorry but the page you are looking for does not exist, have been removed. name changed or is temporarily unavailable</p>
+      <a href="{% url 'exam-home' %}">Back to homepage</a>
+      </div>
+    </div>
+  {% endif %}
+  {% endwith %}
+{% endblock content %}

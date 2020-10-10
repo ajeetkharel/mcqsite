@@ -8,9 +8,7 @@
                 <input type="text" class="form-control mr-3 mb-4" name="first_name" size="13" placeholder="First Name">
                 <input type="text" class="form-control mb-4" name="last_name" size="13" placeholder="Last Name">
             </div>
-
             <!-- Email -->
-
             {% if form.errors %}
                 {% for field in form %}
                     {% if field.label == "Email address" %}
