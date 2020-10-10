@@ -9,8 +9,9 @@
             </div>
             <div class="col ml-auto justify-content-end" id="demo"></div>
             <script>
-                var countDownDate = Date.parse("{{Exam.end_date|date:'d-m-Y H:m:s'}}");
-                console.log("{{Exam.end_date|date:'d-m-Y H:m:s'}}");
+                var countDownDate = Date.parse("{{Exam.end_date|date:'m-d-Y H:m:s'}}");
+                console.log("{{Exam.end_date|date:'m-d-Y H:m:s'}}");
+                console.log(countDownDate);
                 // Update the count down every 1 second
                 var x = setInterval(function() {
 
