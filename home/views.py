@@ -53,6 +53,24 @@ def online_exam(request):
 
 def manage_exams(request):
     exams = Exam.objects.all()
+    if request.method == 'POST':
+        if request.POST['type'] == "Edit":
+            fields = {}
+            for key, value in request.POST.items():
+                if key.startswith("editFormField"):
+                    fields[key[13:]] = value
+            current_exam = exams.filter(pk=int(fields['id']))[0]
+            current_exam.title = fields['Title']
+            current_exam.start_date = fields['StartDate']
+            current_exam.end_date = fields['EndDate']
+            current_exam.save()
+        elif request.POST['type'] == "Delete":
+            Exam.objects.filter(pk=int(request.POST['deleteFormFieldid'])).delete()
+
+        elif request.POST['type'] == "Add":
+            exam = Exam(title=request.POST['addFormFieldTitle'], start_date=request.POST['addFormFieldStartDate'], end_date=request.POST['addFormFieldEndDate'])
+            exam.save()
+
     return render(request, 'user/manage_exam.html', {'exams':exams})
 
 def edit_exams(request, id):
