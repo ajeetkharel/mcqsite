@@ -27,4 +27,5 @@ urlpatterns = [
     path('register/', userviews.register_user, name='user-register'),
     path('logout/', userviews.logout_user, name='user-logout'),
     path('results/student00<pk>', userviews.user_result, name='user-result')
-]+static(settings.MEDIA_URL ,document_root=settings.MEDIA_ROOT)
+]+[static(settings.MEDIA_URL ,document_root=settings.MEDIA_ROOT),
+     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)]
