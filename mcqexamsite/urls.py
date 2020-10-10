@@ -28,4 +28,4 @@ urlpatterns = [
     path('logout/', userviews.logout_user, name='user-logout'),
     path('results/student00<pk>', userviews.user_result, name='user-result')
 ]+[static(settings.MEDIA_URL ,document_root=settings.MEDIA_ROOT),
-     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)]
+     static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)]
