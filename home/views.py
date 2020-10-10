@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Exam, Question, Result
 from user.models import User
 from datetime import datetime, timedelta
+from django.shortcuts import get_list_or_404, get_object_or_404
 import pytz
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
@@ -53,3 +54,15 @@ def online_exam(request):
 def manage_exams(request):
     exams = Exam.objects.all()
     return render(request, 'user/manage_exam.html', {'exams':exams})
+
+def edit_exams(request, id):
+    exam = get_object_or_404(Exam, pk=id)
+    return render(request, 'user/edit_modal.html', {'exam':exam})
+
+def delete_exams(request, id):
+    exam = get_object_or_404(Exam, pk=id)
+    return render(request, 'user/delete_modal.html', {'exam':exam})
+
+def add_exams(request):
+    # exam = get_object_or_404(Exam, pk=id)
+    return render(request, 'user/add_modal.html')

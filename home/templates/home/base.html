@@ -79,6 +79,7 @@
       {% endif %}
     {% endif %}
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/0ec6290b20.js" crossorigin="anonymous"></script>
@@ -98,6 +99,48 @@
   $("#menu-toggle").click(function(e) {
     e.preventDefault();
     $("#wrapper").toggleClass("toggled");
+  });
+</script>
+<script>
+  var modalDiv = $("#modal-div");
+  $('[data-action=edit_modal]').on("click", function() {
+    var id = $(this).data('id');
+    $.ajax({
+      url: 'edit_exams/'+id,
+      success: function(data) {
+        modalDiv.html(data);
+        $("#myEdit").modal('show');
+      },
+      error:function(){
+            console.log('error')
+        },
+    });
+  });
+  $('[data-action=delete_modal]').on("click", function() {
+    var id = $(this).data('id');
+    $.ajax({
+      url: 'delete_exams/'+id,
+      success: function(data) {
+        modalDiv.html(data);
+        $("#myDelete").modal('show');
+      },
+      error:function(){
+            console.log('error')
+        },
+    });
+  });
+  $('[data-action=add_modal]').on("click", function() {
+    var id = $(this).data('id');
+    $.ajax({
+      url: 'add_exams/',
+      success: function(data) {
+        modalDiv.html(data);
+        $("#myadd").modal('show');
+      },
+      error:function(){
+            console.log('error')
+        },
+    });
   });
 </script>
 </body>
